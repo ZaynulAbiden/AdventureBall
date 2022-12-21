@@ -21,26 +21,32 @@ public class Levels : MonoBehaviour
     }
 
     #endregion
-    public Transform currentLevel;
-    public Transform[] allLevels;
+    public GameObject currentLevel;
+    public GameObject[] allLevels;
     public int selectedLevelIndex;
     public BallController ball;
 
     private void Start()
     {
+        foreach (var level in allLevels)
+        {
+            level.SetActive(false);
+        }
         LevelSetup(-1);
-
     }
     public void LevelSetup(int i)
     {
+        if(currentLevel) currentLevel.SetActive(false);
+
         if (i > -1)
         {
             PlayerPrefs.SetInt(nameof(selectedLevelIndex), i);
             selectedLevelIndex = i;
         }
 
-        if (currentLevel)    Destroy(currentLevel.gameObject);
-        currentLevel = Instantiate(allLevels[selectedLevelIndex]);
-        ball.SetBallPosition(currentLevel.Find("StartingPoint").transform.position);
+        currentLevel = allLevels[selectedLevelIndex];
+
+        currentLevel.SetActive(true);
+        ball.SetBallPosition();
     }
 }

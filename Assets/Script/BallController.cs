@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.XPath;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -18,7 +19,6 @@ public class BallController : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        rb = GetComponent<Rigidbody>();
 
     }
 
@@ -26,68 +26,62 @@ public class BallController : MonoBehaviour
     #region Data Member
     Vector3 mousePos;
 
+    Transform startingPlace;
+    public Transform checkPoint = null;
     [Header("Camera Settings")]
     public Transform cam;
-    public float camRotationSpeed;
-    public bool camRotating;
-    public Vector3 camPoint1;
-    public Vector3 camPoint2;
+    Vector3 camOffset = new Vector3(0, 5, -5);
 
-
-    public int inverseControl = 1;
     [Header("Ball Settings")]
-    Rigidbody rb;
-    public float speed;
-    public float maxSpeed=50;
+    public Rigidbody rb;
+    public float ballSpeed;
+    public float maxSpeed = 500;
+    public float extraSpeed = 1;
     public int ballsLeft = 3;
     #endregion
-
-    public void SetBallPosition(Vector3 position)
-    {
-        transform.position = position;
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        camPoint1 = transform.position + new Vector3(0, 5, -5);
-        camPoint2 = transform.position + new Vector3(0, 5, 5);
-    }
-
     #region Unity Methods
 
-
-    private void Update()
+    private void FixedUpdate()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
             mousePos = Input.mousePosition;
         if (Input.GetMouseButton(0))
-        {
             Movement();
-            return;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            camRotating= false;
-        }
-    }
-    void LateUpdate()
-    {
-        if (!camRotating)
-        {
-            if (inverseControl == 1)
-                cam.position = camPoint1;
-            else
-                cam.position = camPoint2;
-        }
+        if (GameManager.instance.isGameRunning)
+            camMove();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "LevelEnd")
+        if(other.tag == "CheckPoint")
+        {
+            checkPoint = other.transform;
+        }
+        if (other.tag == "EndPoint")
         {
             LevelEnd();
             return;
         }
+        if (other.tag == "Coin")
+        {
+            GetCoin(other.gameObject);
+            return;
+        }
+        if (other.tag == "Key")
+        {
+            GetKey(other.gameObject);
+            return;
+        }
+        
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Bridge")
+        {
+            PlayObjectAnimation(collision.transform);
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "DestructionLayer")
@@ -97,19 +91,59 @@ public class BallController : MonoBehaviour
     }
     #endregion
 
+    #region Object Collide Functions
+    void PlayObjectAnimation(Transform obj)
+    {
+        obj.GetComponent<Animator>().enabled = true;
+        print("done");
+
+    }
+    public void GetCoin(GameObject obj)
+    {
+        Destroy(obj);
+        GameManager.instance.UpdateCoins(1);
+    }
+    public void GetKey(GameObject obj)
+    {
+        Destroy(obj);
+        GameManager.instance.UpdateKeys(1);
+    }
+    #endregion
+
+    public void SetBallPosition()
+    {
+        if (checkPoint!=null)
+        {
+            transform.position = checkPoint.position;
+            transform.eulerAngles = checkPoint.eulerAngles;
+        }
+            
+        else
+        {
+            startingPlace = Levels.instance.currentLevel.transform.Find("StartingPoint").transform;
+            transform.position = startingPlace.position;
+        }
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        cam.position = transform.position + camOffset;
+        camMove();
+    }
     void LostChance()
     {
-        SetBallPosition(Levels.instance.currentLevel.Find("StartingPoint").transform.position);
+        SetBallPosition();
         if (--ballsLeft == 0)
         {
-            GameManager.instance. GameOver();
+            GameManager.instance.GameOver();
             return;
         }
         GameManager.instance.UpdateBallsLeftContainer(ballsLeft);
     }
     void LevelEnd()
     {
-        GameManager.instance.NextLevel();
+        checkPoint = null;
+        Levels.instance.LevelSetup(++Levels.instance.selectedLevelIndex);
+        GameManager.instance.levelNoTxt.text = "Level " + (Levels.instance.selectedLevelIndex + 1);
     }
 
     #region Movement Function
@@ -118,65 +152,29 @@ public class BallController : MonoBehaviour
         if (!GameManager.instance.isGameRunning)
             return;
 
-        if (mousePos.y + 10f < Input.mousePosition.y)
-        {
-         //   rb.AddForce((Vector3.forward * inverseControl) * speed * 100 * Time.deltaTime, ForceMode.Impulse);
-         //   rb.AddTorque((Vector3.forward * inverseControl) * speed * 5000 * Time.deltaTime);
-          //  StartCoroutine(RotateCamUp());
-        }
-        else if (mousePos.y - 50f > Input.mousePosition.y)
-        {
-           // rb.AddForce((-Vector3.forward*inverseControl) * speed * 100 * Time.deltaTime, ForceMode.Impulse);
-           // rb.AddTorque((-Vector3.forward * inverseControl) * speed * 5000 * Time.deltaTime);
-           if(!camRotating)
-            StartCoroutine(RotateCamDown());
-        }
-        if (mousePos.x + 100 < Input.mousePosition.x)
-        {
-         //   rb.AddForce((Vector3.right*inverseControl) * speed * 200 * Time.deltaTime, ForceMode.Impulse);
-         //   rb.AddTorque((Vector3.right*inverseControl) * speed * 5000 * Time.deltaTime);
+        float ySpeed = Input.mousePosition.y - mousePos.y;
+        float xSpeed = Input.mousePosition.x - mousePos.x;
+        xSpeed = Mathf.Clamp(xSpeed, -maxSpeed, maxSpeed);
+        ySpeed = Mathf.Clamp(ySpeed, -maxSpeed, maxSpeed);
 
-        }
-        else if (mousePos.x - 100 > Input.mousePosition.x)
-        {
-         //   rb.AddForce((-Vector3.right*inverseControl) * speed * 200 * Time.deltaTime, ForceMode.Impulse);
-          //  rb.AddTorque((-Vector3.right*inverseControl) * speed * 5000 * Time.deltaTime, ForceMode.Impulse);
-        }
 
-      //  rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+        if(ySpeed > 0 || ySpeed < 0)
+            rb.AddForce(cam.forward* ySpeed *extraSpeed* ballSpeed * Time.deltaTime);
+
+        if(xSpeed > 100 || xSpeed < 100)
+            rb.AddForce(cam.right * xSpeed *extraSpeed* ballSpeed * Time.deltaTime);
+
     }
-
-
-
-    IEnumerator RotateCamDown()
+    public float distanceFromObject;
+    void camMove()
     {
-        camRotating = true;
-        print("called");
-
-        Vector3 positionTarget = Vector3.zero;
-        float rotationTarget = 0;
-        inverseControl *= -1;
-        if (inverseControl == 1)
-        {
-            positionTarget = camPoint1;
-            rotationTarget = 0;
-        }
-        else
-        {
-            positionTarget = camPoint2;
-            rotationTarget = 180;
-        }
-
-        while (cam.position!= positionTarget)
-        {
-            print(cam.rotation.eulerAngles.y);
-            cam.position = Vector3.Lerp(cam.position, positionTarget,  Time.deltaTime);
-            cam.rotation = Quaternion.Lerp(cam.rotation, 
-            Quaternion.Euler(cam.rotation.eulerAngles.x, rotationTarget, cam.rotation.eulerAngles.z), Time.deltaTime);
-            yield return null;
-        }
-        camRotating = false;
+        Vector3 lookOnObject = transform.position - cam.position;
+        cam.forward = lookOnObject.normalized;
+        Vector3 playerLastPosition;
+        playerLastPosition = transform.position - lookOnObject.normalized * distanceFromObject;
+        playerLastPosition.y = transform.position.y + distanceFromObject/2;
+        cam.position = Vector3.Lerp(cam.position, playerLastPosition, Time.deltaTime * 10); 
     }
-
+   
     #endregion
 }

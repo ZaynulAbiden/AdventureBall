@@ -1,0 +1,306 @@
+fileFormatVersion: 2
+guid: b198b61330500844fbf06e45df2f047c
+ModelImporter:
+  serializedVersion: 21300
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 0-_0-_Coin_Star_Gold
+    second: {fileID: 2100000, guid: 629253c6a6bf10e41b078ac9bd70394a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 1-_0-_Coin_Star_Gold
+    second: {fileID: 2100000, guid: aabd1408fb115ca4b82e37899912097c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 10-_10-_Coin_Thunder_
+    second: {fileID: 2100000, guid: 00eea66dfd223fe4f9997af03723395b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 11-_10-_Coin_Thunder_
+    second: {fileID: 2100000, guid: 16d6c846b2b1b934fa6da00041867012, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 12-_12-_Coin_Skull_Si
+    second: {fileID: 2100000, guid: 66848d571df64f34fa30c9aefe2100ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 13-_12-_Coin_Skull_Si
+    second: {fileID: 2100000, guid: a364fb8e171157b4d89ab08347887ec7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 14-_14-_Coin_Skull_Go
+    second: {fileID: 2100000, guid: eaf8de56abf823a4faf3cd1654f0d955, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 15-_14-_Coin_Skull_Go
+    second: {fileID: 2100000, guid: d79a40e3a407fbc4ca4a24ae3c8c60ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 16-_16-_Coin_Crown_Go
+    second: {fileID: 2100000, guid: f43ebde346d07c043b3e185dd0674869, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 17-_16-_Coin_Crown_Go
+    second: {fileID: 2100000, guid: 7bf7534ca2800c64ca58bde33e16b032, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 18-_18-_Coin_Crown_Si
+    second: {fileID: 2100000, guid: 0026a673089473845a2bf4f1e25f1fdd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 19-_18-_Coin_Crown_Si
+    second: {fileID: 2100000, guid: bd4e95b85cd46ef43a8c04eb64e49db2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 2-_2-_Coin_Star_Silve
+    second: {fileID: 2100000, guid: 596315b57670fba49b7e66a2a28bd612, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 20-_20-_Coin_Dollar_S
+    second: {fileID: 2100000, guid: 3bedacdddd0ca8646b27211352cde40c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 21-_20-_Coin_Dollar_S
+    second: {fileID: 2100000, guid: d7fec938b78f1c14fb451b87c356f574, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 22-_22-_Coin_Dollar_G
+    second: {fileID: 2100000, guid: 0352c7b400537864ab53e5248ad8380c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 23-_22-_Coin_Dollar_G
+    second: {fileID: 2100000, guid: 15f572eabc2b73242b6c0ad4427a0f26, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 24-_24-_Coin_Heart_Go
+    second: {fileID: 2100000, guid: 26b27f71d650a9d40bcfc52979275c6b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 25-_24-_Coin_Heart_Go
+    second: {fileID: 2100000, guid: 85a4d37398938ec40a6cb4013ae85a69, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 26-_26-_Coin_Heart_Si
+    second: {fileID: 2100000, guid: f125a6cf9979317429d8841b938e5fab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 27-_26-_Coin_Heart_Si
+    second: {fileID: 2100000, guid: bcbf0a3b1e6f170488f78d07b76b0599, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 28-_28-_Coin_Pet_Silv
+    second: {fileID: 2100000, guid: 32eaf33fbf2aaac4f82f0351f7a8b4c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 29-_28-_Coin_Pet_Silv
+    second: {fileID: 2100000, guid: 33eab8eca17682240b4ab181899ecc01, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 3-_2-_Coin_Star_Silve
+    second: {fileID: 2100000, guid: 90449983e0dd7ab49aab787ce9d92c14, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 30-_30-_Coin_Pet_Gold
+    second: {fileID: 2100000, guid: b9dfd927acc102c4f95d844519ade46f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 31-_30-_Coin_Pet_Gold
+    second: {fileID: 2100000, guid: cca91ce6fbf197b45ab00bd015fc4e0e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 32-_32-_Coin_One_Gold
+    second: {fileID: 2100000, guid: fbf3b58bf93c49c44af3f80f0885fdd4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 33-_32-_Coin_One_Gold
+    second: {fileID: 2100000, guid: cad0a67d36afd43459142ff603697cbb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 34-_34-_Coin_One_Silv
+    second: {fileID: 2100000, guid: 0c39db5732665564f94804363ee9a521, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 35-_34-_Coin_One_Silv
+    second: {fileID: 2100000, guid: 13172fd37e2039c4cbe402e51a958f29, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 36-_36-_Coins_01
+    second: {fileID: 2100000, guid: d14a6b4f2db52e341bd9ffeeeccc43c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 37-_36-_Coins_01
+    second: {fileID: 2100000, guid: dfdc6aba21180f844b4e0063acfe8f62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 38-_38-_Coins_02
+    second: {fileID: 2100000, guid: 93a6e8b09c45a4d4ba029e84030857fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 39-_38-_Coins_02
+    second: {fileID: 2100000, guid: 6be36b4fbd80ab040981044db5cb87c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 4-_4-_Coin_Silver
+    second: {fileID: 2100000, guid: 51dae9680d382a84fb957fea8730fab5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 5-_4-_Coin_Silver
+    second: {fileID: 2100000, guid: 8479d63467feba046a9bf701ff3885c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 6-_6-_Coin_Gold
+    second: {fileID: 2100000, guid: 42604fbba00eab4439e7c1c88b517fab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 7-_6-_Coin_Gold
+    second: {fileID: 2100000, guid: 1ebd9cde5a1653245bbdc24df3ff0590, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 8-_8-_Coin_Thunder_Go
+    second: {fileID: 2100000, guid: 3b999e8e913b05348bf979c723c9f2cd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 9-_8-_Coin_Thunder_Go
+    second: {fileID: 2100000, guid: 91a7c7407fd3e1c4e8469495b4d4c770, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -22,29 +22,29 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-
     #region Data Member
     public bool isGameRunning;
     public int Keys;
-    public int coins;
+    public int Coins;
 
-
-    #endregion
-
-    #region Data Member
     [Header("Main Menu UI Items")]
     public GameObject mainMenu;
-    public Transform keysContainer;
-    public Text coinTxt;
+    public Text coinsMenuTxt;
+    public Text keysMenuTxt;
     [Header("In Game UI Items")]
     public GameObject inGameUI;
     public GameObject pausePanel;
     public Transform ballLeftContainer;
+    public Text keysGameTxt;
+    public Text coinsGameTxt;
     public Text levelNoTxt;
+    public Image levelBar;
     [Header(" Other Panels")]
     public GameObject gameOverPanel;
+    [Header("Controls ")]
+    public bool joystickMode;
+    public GameObject joystickBtn;
     #endregion
-
     #region Unity Methods
 
     public void Start()
@@ -53,65 +53,68 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-
     #region Gameplay Functions
-    public void StartGame()
+    public void StartGame(int ball=3)
     {
         isGameRunning = true;
         mainMenu.SetActive(false);
         inGameUI.SetActive(true);
         levelNoTxt.text = "Level " + (Levels.instance.selectedLevelIndex + 1);
-        UpdateBallsLeftContainer(3);
+        if (ball >= 3)
+            BallController.instance.checkPoint = null;
+        UpdateBallsLeftContainer(ball);
     }
-
     public void GameOver()
     {
         isGameRunning = false;
         inGameUI.SetActive(false);
         gameOverPanel.SetActive(true);
     }
-    public void PauseGame()
+    public void PauseGame()    
     {
         Time.timeScale = 0;
         pausePanel.SetActive(true);
         inGameUI.SetActive(false);
-
     }
     public void ResumeGame()
     {
         Time.timeScale = 1;
         pausePanel.SetActive(false);
-
+        inGameUI.SetActive(true);
     }
-    public void NextLevel()
+    public void ResetGameplay()
     {
-        Levels.instance.LevelSetup( ++Levels.instance.selectedLevelIndex);
-        levelNoTxt.text = "Level " + (Levels.instance.selectedLevelIndex + 1);
-        
+        isGameRunning = false;
+        Time.timeScale = 1;
+        Levels.instance.LevelSetup(Levels.instance.selectedLevelIndex);
     }
     public void LoadMainMenu()
-    {
+    {   
+        isGameRunning = false;
         mainMenu.SetActive(true);
-        GameManager.instance.UpdateKeysContainer();
-        GameManager.instance.UpdateCoinsContainer();
+
+        GameManager.instance.UpdateKeys(0);
+        GameManager.instance.UpdateCoins(0);
+    }   
+    public void ChangeControl()
+    {
+        joystickMode = !joystickMode;
+        joystickBtn.SetActive(joystickMode);
     }
     #endregion
-
-    
-
-
     #region Update Container Values
-    public void UpdateCoinsContainer()
+    public void UpdateCoins(int coin)
     {
-        coinTxt.text = GameManager.instance.coins.ToString();
+        Coins += coin;
+        coinsGameTxt.text = Coins.ToString();
+        coinsMenuTxt.text = Coins.ToString();
     }
-    public void UpdateKeysContainer()
+    public void UpdateKeys(int key)
     {
-        int i = 0;
-        while (i < GameManager.instance.Keys)
-            keysContainer.GetChild(i++).gameObject.SetActive(true);
-        while (i < keysContainer.childCount)
-            keysContainer.GetChild(i++).gameObject.SetActive(false);
+        Keys += key;
+        keysGameTxt.text = Keys.ToString();
+        keysMenuTxt.text = Keys.ToString();
+
     }
     public void UpdateBallsLeftContainer(int balls)
     {
@@ -123,5 +126,4 @@ public class GameManager : MonoBehaviour
             ballLeftContainer.GetChild(i++).gameObject.SetActive(false);
     }
     #endregion
-
 }
