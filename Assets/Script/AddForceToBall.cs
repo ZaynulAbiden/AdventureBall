@@ -9,7 +9,6 @@ public class AddForceToBall : MonoBehaviour
     {
         if (collision.transform == BallController.instance.transform)
         {
-            print("Jump");
             BallController.instance.rb.AddForce(BallController.instance.cam.up * SpeedMultiplyer * Time.deltaTime);
         }
     }

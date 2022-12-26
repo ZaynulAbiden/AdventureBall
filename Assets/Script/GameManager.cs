@@ -44,12 +44,15 @@ public class GameManager : MonoBehaviour
     [Header("Controls ")]
     public bool joystickMode;
     public GameObject joystickBtn;
+    public Slider volumeBar;
     #endregion
     #region Unity Methods
 
     public void Start()
     {
         LoadMainMenu();
+        volumeBar.value = PlayerPrefs.GetFloat(nameof(volumeBar), 1);
+
     }
 
     #endregion
@@ -63,6 +66,7 @@ public class GameManager : MonoBehaviour
         if (ball >= 3)
             BallController.instance.checkPoint = null;
         UpdateBallsLeftContainer(ball);
+        AudioManager.instance.PlayMusic("Game Running");
     }
     public void GameOver()
     {
@@ -89,10 +93,10 @@ public class GameManager : MonoBehaviour
         Levels.instance.LevelSetup(Levels.instance.selectedLevelIndex);
     }
     public void LoadMainMenu()
-    {   
-        isGameRunning = false;
+    {
+        ResetGameplay();
+        AudioManager.instance.PlayMusic("Main Menu");
         mainMenu.SetActive(true);
-
         GameManager.instance.UpdateKeys(0);
         GameManager.instance.UpdateCoins(0);
     }   
@@ -100,6 +104,13 @@ public class GameManager : MonoBehaviour
     {
         joystickMode = !joystickMode;
         joystickBtn.SetActive(joystickMode);
+    }
+
+    public void ChangeVolume( ) {
+        PlayerPrefs.SetFloat(nameof(volumeBar),volumeBar.value);    
+        AudioManager.instance.musicSource.volume = volumeBar.value;
+        AudioManager.instance.sfxSource.volume = volumeBar.value;
+        BallController.instance.rollingSound.volume = volumeBar.value;
     }
     #endregion
     #region Update Container Values

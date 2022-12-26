@@ -11,6 +11,8 @@ TagManager:
   - EndPoint
   - CheckPoint
   - Bridge
+  - Obstacle
+  - Ground
   layers:
   - Default
   - TransparentFX

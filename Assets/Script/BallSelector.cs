@@ -10,18 +10,18 @@ public class BallSelector : MonoBehaviour
 
     private void Start()
     {
-        BallSetup(-1);
+        selectedBallIndex = PlayerPrefs.GetInt(nameof(selectedBallIndex), 0);
+        BallSetup(selectedBallIndex);
 
     }
     public void BallSetup(int i)
     {
-        if (i > -1)
-        {
-            PlayerPrefs.SetInt(nameof(selectedBallIndex), i);
-            selectedBallIndex = i;
-        }
-
+        PlayerPrefs.SetInt(nameof(selectedBallIndex), i);
+        selectedBallIndex = i;
         if (currentBall) Destroy(currentBall.gameObject);
         currentBall = Instantiate(allBalls[selectedBallIndex],BallController.instance.transform);
+        AudioManager.instance.PlaySFX("Ball Select");
     }
+
+
 }

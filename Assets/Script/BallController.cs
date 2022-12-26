@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.XPath;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-
+using UnityEngine.Audio;
 public class BallController : MonoBehaviour
 {
     #region Singleton
@@ -34,10 +32,13 @@ public class BallController : MonoBehaviour
 
     [Header("Ball Settings")]
     public Rigidbody rb;
+    public AudioSource rollingSound;
     public float ballSpeed;
     public float maxSpeed = 500;
     public float extraSpeed = 1;
     public int ballsLeft = 3;
+
+    bool isGrounded;
     #endregion
     #region Unity Methods
 
@@ -47,9 +48,20 @@ public class BallController : MonoBehaviour
             mousePos = Input.mousePosition;
         if (Input.GetMouseButton(0))
             Movement();
+
         if (GameManager.instance.isGameRunning)
             camMove();
+
+        if (!rollingSound.isPlaying && isGrounded)
+        {
+            rollingSound.Play();
+        }
+        else if(!isGrounded || (rb.velocity.magnitude<5 && rollingSound.isPlaying))
+        {
+            rollingSound.Stop();
+        }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -60,6 +72,7 @@ public class BallController : MonoBehaviour
         if (other.tag == "EndPoint")
         {
             LevelEnd();
+            other.enabled = false;
             return;
         }
         if (other.tag == "Coin")
@@ -72,15 +85,6 @@ public class BallController : MonoBehaviour
             GetKey(other.gameObject);
             return;
         }
-        
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.transform.tag == "Bridge")
-        {
-            PlayObjectAnimation(collision.transform);
-        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -89,27 +93,49 @@ public class BallController : MonoBehaviour
             LostChance();
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Bridge")
+        {
+            PlayObjectAnimation(collision.transform);
+        }
+        if (collision.transform.tag == "Obstacle")
+        {
+            AudioManager.instance.PlaySFX("Obstacle"+Random.Range(1,3).ToString());
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (!isGrounded && rb.velocity.magnitude > 5)
+            if (collision.transform.tag == "Ground")
+                isGrounded = true;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (isGrounded)
+            if (collision.transform.tag == "Ground")
+                isGrounded = false;
+    }
     #endregion
 
     #region Object Collide Functions
     void PlayObjectAnimation(Transform obj)
     {
         obj.GetComponent<Animator>().enabled = true;
-        print("done");
-
     }
     public void GetCoin(GameObject obj)
     {
+        AudioManager.instance.PlaySFX("Coin");
         Destroy(obj);
         GameManager.instance.UpdateCoins(1);
     }
     public void GetKey(GameObject obj)
     {
+        AudioManager.instance.PlaySFX("Key"+Random.Range(1,3).ToString());
         Destroy(obj);
         GameManager.instance.UpdateKeys(1);
     }
     #endregion
-
     public void SetBallPosition()
     {
         if (checkPoint!=null)
@@ -131,6 +157,7 @@ public class BallController : MonoBehaviour
     }
     void LostChance()
     {
+        AudioManager.instance.PlaySFX("Fail");
         SetBallPosition();
         if (--ballsLeft == 0)
         {
@@ -141,7 +168,14 @@ public class BallController : MonoBehaviour
     }
     void LevelEnd()
     {
-        checkPoint = null;
+        AudioManager.instance.PlaySFX("Win");
+        VfxHandler.instance.PlayParticle(nameof(LevelEnd), Vector3.zero);
+        Invoke(nameof(InvokeNewLevel),5);
+        rb.isKinematic = true;
+    }
+    void InvokeNewLevel()
+    {
+        rb.isKinematic = false;
         Levels.instance.LevelSetup(++Levels.instance.selectedLevelIndex);
         GameManager.instance.levelNoTxt.text = "Level " + (Levels.instance.selectedLevelIndex + 1);
     }
@@ -154,16 +188,17 @@ public class BallController : MonoBehaviour
 
         float ySpeed = Input.mousePosition.y - mousePos.y;
         float xSpeed = Input.mousePosition.x - mousePos.x;
-        xSpeed = Mathf.Clamp(xSpeed, -maxSpeed, maxSpeed);
-        ySpeed = Mathf.Clamp(ySpeed, -maxSpeed, maxSpeed);
 
-
+        if(xSpeed >200)
+            xSpeed = Mathf.Clamp(xSpeed, -maxSpeed, maxSpeed);
+            ySpeed = Mathf.Clamp(ySpeed, -maxSpeed, maxSpeed);
+       
         if(ySpeed > 0 || ySpeed < 0)
-            rb.AddForce(cam.forward* ySpeed *extraSpeed* ballSpeed * Time.deltaTime);
+            rb.AddForce(new Vector3( cam.forward.x,0,cam.forward.z)* ySpeed *extraSpeed* ballSpeed * Time.deltaTime);
 
         if(xSpeed > 100 || xSpeed < 100)
-            rb.AddForce(cam.right * xSpeed *extraSpeed* ballSpeed * Time.deltaTime);
-
+            rb.AddForce(new Vector3( cam.right.x,0,cam.right.z) * xSpeed *extraSpeed* ballSpeed * Time.deltaTime);
+      
     }
     public float distanceFromObject;
     void camMove()
@@ -172,9 +207,8 @@ public class BallController : MonoBehaviour
         cam.forward = lookOnObject.normalized;
         Vector3 playerLastPosition;
         playerLastPosition = transform.position - lookOnObject.normalized * distanceFromObject;
-        playerLastPosition.y = transform.position.y + distanceFromObject/2;
-        cam.position = Vector3.Lerp(cam.position, playerLastPosition, Time.deltaTime * 10); 
+        playerLastPosition.y = transform.position.y + distanceFromObject/1.5f;
+        cam.position = Vector3.Lerp(cam.position, playerLastPosition, Time.deltaTime * 20); 
     }
-   
     #endregion
 }

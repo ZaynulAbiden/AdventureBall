@@ -28,22 +28,19 @@ public class Levels : MonoBehaviour
 
     private void Start()
     {
+        selectedLevelIndex= PlayerPrefs.GetInt(nameof(selectedLevelIndex),0);
         foreach (var level in allLevels)
         {
             level.SetActive(false);
         }
-        LevelSetup(-1);
     }
     public void LevelSetup(int i)
     {
         if(currentLevel) currentLevel.SetActive(false);
 
-        if (i > -1)
-        {
-            PlayerPrefs.SetInt(nameof(selectedLevelIndex), i);
-            selectedLevelIndex = i;
-        }
-
+        PlayerPrefs.SetInt(nameof(selectedLevelIndex), i);
+        selectedLevelIndex = i;
+        BallController.instance. checkPoint = null;
         currentLevel = allLevels[selectedLevelIndex];
 
         currentLevel.SetActive(true);
