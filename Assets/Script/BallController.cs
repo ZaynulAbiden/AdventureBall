@@ -170,7 +170,7 @@ public class BallController : MonoBehaviour
     {
         AudioManager.instance.PlaySFX("Win");
         VfxHandler.instance.PlayParticle(nameof(LevelEnd), Vector3.zero);
-        Invoke(nameof(InvokeNewLevel),5);
+        Invoke(nameof(InvokeNewLevel),3);
         rb.isKinematic = true;
     }
     void InvokeNewLevel()
@@ -196,7 +196,7 @@ public class BallController : MonoBehaviour
         if(ySpeed > 0 || ySpeed < 0)
             rb.AddForce(new Vector3( cam.forward.x,0,cam.forward.z)* ySpeed *extraSpeed* ballSpeed * Time.deltaTime);
 
-        if(xSpeed > 100 || xSpeed < 100)
+        if(xSpeed > 500 || xSpeed < 500)
             rb.AddForce(new Vector3( cam.right.x,0,cam.right.z) * xSpeed *extraSpeed* ballSpeed * Time.deltaTime);
       
     }
