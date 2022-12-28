@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.sfxSource.volume = volumeBar.value;
         BallController.instance.rollingSound.volume = volumeBar.value;
     }
+
     #endregion
     #region Update Container Values
     public void UpdateCoins(int coin)

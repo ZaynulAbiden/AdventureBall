@@ -189,16 +189,21 @@ public class BallController : MonoBehaviour
         float ySpeed = Input.mousePosition.y - mousePos.y;
         float xSpeed = Input.mousePosition.x - mousePos.x;
 
-        if(xSpeed >200)
-            xSpeed = Mathf.Clamp(xSpeed, -maxSpeed, maxSpeed);
-            ySpeed = Mathf.Clamp(ySpeed, -maxSpeed, maxSpeed);
+        xSpeed = Mathf.Clamp(xSpeed, -maxSpeed, maxSpeed);
+        ySpeed = Mathf.Clamp(ySpeed, -maxSpeed, maxSpeed);
        
-        if(ySpeed > 0 || ySpeed < 0)
-            rb.AddForce(new Vector3( cam.forward.x,0,cam.forward.z)* ySpeed *extraSpeed* ballSpeed * Time.deltaTime);
+        if(ySpeed > 100 || ySpeed < -100)
+        {
 
-        if(xSpeed > 500 || xSpeed < 500)
-            rb.AddForce(new Vector3( cam.right.x,0,cam.right.z) * xSpeed *extraSpeed* ballSpeed * Time.deltaTime);
-      
+            rb.AddForce(new Vector3(cam.forward.x, 0, cam.forward.z) * ySpeed * extraSpeed * ballSpeed * Time.deltaTime);
+
+        }
+
+        if (xSpeed > 150 || xSpeed < -150)
+        {
+            rb.AddForce(new Vector3( cam.right.x,0,cam.right.z) * xSpeed * extraSpeed* ballSpeed * Time.deltaTime);
+        }
+
     }
     public float distanceFromObject;
     void camMove()
