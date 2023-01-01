@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject mainMenu;
     public Text coinsMenuTxt;
     public Text keysMenuTxt;
+    public int rewardForAd;
     [Header("In Game UI Items")]
     public GameObject inGameUI;
     public GameObject pausePanel;
@@ -41,6 +42,10 @@ public class GameManager : MonoBehaviour
     public Image levelBar;
     [Header(" Other Panels")]
     public GameObject gameOverPanel;
+    public GameObject unlockAllBalls;
+    public GameObject removeAds;
+    public GameObject removeAdsBtn;
+    public GameObject unlockEverything;
     [Header("Controls ")]
     public bool joystickMode;
     public GameObject joystickBtn;
@@ -105,14 +110,29 @@ public class GameManager : MonoBehaviour
         joystickMode = !joystickMode;
         joystickBtn.SetActive(joystickMode);
     }
-
-    public void ChangeVolume( ) {
+    public void ChangeVolume() {
         PlayerPrefs.SetFloat(nameof(volumeBar),volumeBar.value);    
         AudioManager.instance.musicSource.volume = volumeBar.value;
         AudioManager.instance.sfxSource.volume = volumeBar.value;
         BallController.instance.rollingSound.volume = volumeBar.value;
     }
+    public void WatchAd()
+    {
+      //Watch Ad
+       UpdateCoins(rewardForAd);
+    }   
+   
+    public void RemoveAds()
+    {
+        removeAds.SetActive(true);
+        removeAdsBtn.SetActive(false);
+        PlayerPrefs.GetInt("RemoveAd", 1);
+    }
 
+    public void UnlockEverything()
+    {
+        RemoveAds();
+    }
     #endregion
     #region Update Container Values
     public void UpdateCoins(int coin)

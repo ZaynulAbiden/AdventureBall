@@ -62,8 +62,7 @@ public class BallController : MonoBehaviour
         }
     }
 
-
-    private void OnTriggerEnter(Collider other)
+private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "CheckPoint")
         {
@@ -213,7 +212,9 @@ public class BallController : MonoBehaviour
         Vector3 playerLastPosition;
         playerLastPosition = transform.position - lookOnObject.normalized * distanceFromObject;
         playerLastPosition.y = transform.position.y + distanceFromObject/1.5f;
-        cam.position = Vector3.Lerp(cam.position, playerLastPosition, Time.deltaTime * 20); 
+     //   cam.position = Vector3.Lerp(cam.position, playerLastPosition, Time.deltaTime * 20);
+        Vector3 velocity = Vector3.zero;
+        cam.position = Vector3.SmoothDamp(cam.position, playerLastPosition, ref velocity, 0.01f);
     }
     #endregion
 }
